@@ -57,7 +57,7 @@ export default function CircuitEdge({
         }} 
       />
 
-      {isFlowing && (
+      {isFlowing && edgePath && edgePath !== 'M ' && (
         <circle r="3.5" fill={colorScale} filter="url(#glow-light)">
           <animateMotion
             dur={`${animationDuration}s`}

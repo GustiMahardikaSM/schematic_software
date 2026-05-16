@@ -6,27 +6,43 @@ import { z } from 'zod';
  */
 export const ComponentSchema = z.object({
   id: z.string().describe('Unique ID for the component (e.g., v1, r1)'),
-  type: z.enum(['source', 'resistor', 'capacitor', 'inductor', 'ground'])
-    .describe('Functional type for MNA SPICE engine'),
-  value: z.number().describe('Physical value (e.g., Ohms, Volts)'),
-  unit: z.string().describe('Unit symbol (e.g., V, Ω)'),
+  type: z.enum([
+    'source', 'resistor', 'capacitor', 'inductor', 'ground',
+    'diode', 'zener', 'triac',
+    'ic',
+    'mosfet', 'relay',
+    'transformer', 'inductor_coupled',
+    'varistor', 'thermistor'
+  ]).describe('Functional type for MNA SPICE engine'),
+  value: z.number().optional().describe('Physical value (e.g., Ohms, Volts)'),
+  unit: z.string().optional().describe('Unit symbol (e.g., V, Ω)'),
   label: z.string().optional().describe('Display label for the UI'),
+  model: z.string().optional().describe('Part model (e.g., 1N4004, MCR100-B, 78570)'),
   x: z.number().describe('Absolute X coordinate in canvas space'),
   y: z.number().describe('Absolute Y coordinate in canvas space'),
-  fault: z.enum(['normal', 'open', 'short']).default('normal')
+  fault: z.enum(['normal', 'open', 'short', 'leaky']).default('normal')
     .describe('Fault injection state for troubleshooting'),
+  pins: z.array(z.object({
+    id: z.string().describe('Pin identifier (e.g., "1", "VCC")'),
+    label: z.string().optional(),
+    x: z.number().optional().describe('Relative X offset for visual connector'),
+    y: z.number().optional().describe('Relative Y offset for visual connector'),
+  })).optional().describe('Custom pin definitions for multi-pin components (ICs, Transistors)'),
+  properties: z.record(z.any()).optional().describe('Component-specific parameters (e.g., threshold, turns ratio)'),
 });
 
 /**
  * Zod Schema for Wires (Netlist Topology)
- * Represents a simplified SourceNet for atomic netlist encoding.
+ * Design: Maps a component pin to a specific electrical Net (Node).
  */
 export const WireSchema = z.object({
-  id: z.string().describe('Unique ID for the wire'),
-  from: z.string().describe('Origin component ID'),
-  to: z.string().describe('Target component ID'),
-  pathType: z.enum(['up-right', 'right-down', 'down-left', 'left-up'])
-    .describe('Visual path rendering metadata for orthogonal lines'),
+  id: z.string().describe('Unique ID for the wire/connection'),
+  componentId: z.string().describe('ID of the component being connected'),
+  pinId: z.string().describe('Specific pin ID on the component (e.g., "1", "VCC", "anode")'),
+  netId: z.string().describe('The electrical net ID this pin belongs to (e.g., "net_0", "vcc")'),
+  // Visual metadata
+  x: z.number().optional().describe('Visual X coordinate of the connection point'),
+  y: z.number().optional().describe('Visual Y coordinate of the connection point'),
 });
 
 /**

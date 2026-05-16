@@ -101,3 +101,40 @@ button:hover {
   background-color: #e2e8f0;
   transform: scale(1.02);
 }
+
+/* Utility Classes (Tailwind-like) */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+.p-2 { padding: 0.5rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.rounded-full { border-radius: 9999px; }
+.rounded-lg { border-radius: 0.5rem; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xl { font-size: 1.25rem; }
+.font-bold { font-weight: 700; }
+.font-black { font-weight: 900; }
+.tracking-tight { letter-spacing: -0.025em; }
+.text-center { text-align: center; }
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.space-y-8 > * + * { margin-top: 2rem; }
+.bg-green-100 { background-color: #dcfce7; }
+.text-green-700 { color: #15803d; }
+.bg-green-500 { background-color: #22c55e; }
+.border-green-200 { border-color: #bbf7d0; }
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
