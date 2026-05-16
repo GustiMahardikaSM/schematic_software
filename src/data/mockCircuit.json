@@ -1,0 +1,50 @@
+{
+  "components": [
+    {
+      "id": "v1",
+      "type": "source",
+      "value": 12,
+      "unit": "V",
+      "label": "Sumber Utama",
+      "x": 100,
+      "y": 200,
+      "fault": "normal"
+    },
+    {
+      "id": "r1",
+      "type": "resistor",
+      "value": 2000,
+      "unit": "Ω",
+      "label": "R1 (Seri 1)",
+      "x": 250,
+      "y": 100,
+      "fault": "normal"
+    },
+    {
+      "id": "r2",
+      "type": "resistor",
+      "value": 4000,
+      "unit": "Ω",
+      "label": "R2 (Seri 2)",
+      "x": 400,
+      "y": 200,
+      "fault": "normal"
+    },
+    {
+      "id": "gnd1",
+      "type": "ground",
+      "value": 0,
+      "unit": "V",
+      "label": "GND",
+      "x": 250,
+      "y": 300,
+      "fault": "normal"
+    }
+  ],
+  "wires": [
+    { "id": "w1", "from": "v1", "to": "r1", "pathType": "up-right" },
+    { "id": "w2", "from": "r1", "to": "r2", "pathType": "right-down" },
+    { "id": "w3", "from": "r2", "to": "gnd1", "pathType": "down-left" },
+    { "id": "w4", "from": "gnd1", "to": "v1", "pathType": "left-up" }
+  ]
+}
